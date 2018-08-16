@@ -1,0 +1,7 @@
+---
+# vars file for ansible-role-phpupload
+
+phpupload_ini:
+  - { option: upload_max_filesize, value: '{{ phpupload_filesize|default(2) }}M' }
+  - { option: post_max_size, value: '{{ phpupload_post|default(8) }}M' }
+  - { option: memory_limit, value: '{{ phpupload_memory|default(128) }}M' }

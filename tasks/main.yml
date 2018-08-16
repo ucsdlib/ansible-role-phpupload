@@ -1,0 +1,33 @@
+---
+# tasks file for ansible-role-phpupload
+
+- name: Ensure values are integers
+  assert:
+    that:
+      - phpupload_filesize|int != 0
+      - phpupload_post|int != 0
+      - phpupload_memory|int != 0
+    msg: Did you append a suffix (eg M or G) to any variables?
+  tags:
+    - phpupload
+
+- name: Ensure values are sane
+  assert:
+    that:
+      - phpupload_memory|int >= phpupload_post|int
+      - phpupload_post|int >= phpupload_filesize|int
+    msg: PHP Memory must be larger than PHP Post size, which must be larter than PHP Filesize.
+  tags:
+    - phpupload
+
+- name: Set PHP's Upload Settings
+  ini_file:
+    dest: '{{ phpupload_path|default("/etc/php.ini")}}'
+    section: PHP
+    option: '{{ item.option }}'
+    value: '{{ item.value }}'
+    state: present
+  with_items:
+    - '{{ phpupload_ini }}'
+  tags:
+    - phpupload

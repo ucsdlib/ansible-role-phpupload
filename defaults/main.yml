@@ -1,0 +1,10 @@
+---
+# defaults file for ansible-role-phpupload
+
+phpupload_path: /etc/php.ini
+
+# Values taken from http://php.net/manual/en/ini.core.php 2016-11-02
+# All sizes in megabytes
+phpupload_filesize: 2
+phpupload_post: 8
+phpupload_memory: 128
